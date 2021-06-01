@@ -18,7 +18,8 @@ int pop(Node** head)
 {
     Node* prev = NULL;
     int val;
-    if (head == NULL) {
+    if (head == NULL) 
+    {
         exit(-1);
     }
     prev = (*head);
@@ -53,7 +54,8 @@ Node* getLast(Node* head)
     return head;
 }
 
-void pushBack(Node* head, int value) {
+void pushBack(Node* head, int value) 
+{
     Node* last = getLast(head);
     Node* tmp = (Node*)malloc(sizeof(Node));
     tmp->value = value;
@@ -61,36 +63,45 @@ void pushBack(Node* head, int value) {
     last->next = tmp;
 }
 
-Node * getLastButOne(Node * head) {
-    if (head == NULL) {
+Node * getLastButOne(Node * head) 
+{
+    if (head == NULL) 
+    {
         exit(-2);
     }
-    if (head->next == NULL) {
+    if (head->next == NULL) 
+    {
         return NULL;
     }
-    while (head->next->next) {
+    while (head->next->next) 
+    {
         head = head->next;
     }
     return head;
 }
 
-void popBack(Node * *head) {
+void popBack(Node * *head) 
+{
     Node* lastbn = NULL;
     //Получили NULL
-    if (!head) {
+    if (!head) 
+    {
         exit(-1);
     }
-    //Список пуст
-    if (!(*head)) {
+  
+    if (!(*head)) 
+    {
         exit(-1);
     }
     lastbn = getLastButOne(*head);
-    //Если в списке один элемент
-    if (lastbn == NULL) {
+    
+    if (lastbn == NULL) 
+    {
         free(*head);
         *head = NULL;
     }
-    else {
+    else 
+    {
         free(lastbn->next);
         lastbn->next = NULL;
     }
@@ -98,24 +109,28 @@ void popBack(Node * *head) {
 
 int popBack(Node * *head) 
 {
-    Node* pFwd = NULL;  //текущий узел
-    Node* pBwd = NULL;  //предыдущий узел
-    //Получили NULL
-    if (!head) {
+    Node* pFwd = NULL;  
+    Node* pBwd = NULL;  
+   
+    if (!head) 
+    {
         exit(-1);
     }
     //Список пуст
-    if (!(*head)) {
+    if (!(*head)) 
+    {
         exit(-1);
     }
 
     pFwd = *head;
-    while (pFwd->next) {
+    while (pFwd->next) 
+    {
         pBwd = pFwd;
         pFwd = pFwd->next;
     }
 
-    if (pBwd == NULL) {
+    if (pBwd == NULL) 
+    {
         free(*head);
         *head = NULL;
     }
@@ -125,23 +140,25 @@ int popBack(Node * *head)
     }
 }
 
-void insert(Node * head, unsigned n, int val) {
+void insert(Node * head, unsigned n, int val) 
+{
     unsigned i = 0;
     Node* tmp = NULL;
-    //Находим нужный элемент. Если вышли за пределы списка, то выходим из цикла,
-    //ошибка выбрасываться не будет, произойдёт вставка в конец
-    while (i < n && head->next) {
+
+    while (i < n && head->next) 
+    {
         head = head->next;
         i++;
     }
     tmp = (Node*)malloc(sizeof(Node));
     tmp->value = val;
-    //Если это не последний элемент, то next перекидываем на следующий узел
+   
     if (head->next) {
         tmp->next = head->next;
         //иначе на NULL
     }
-    else {
+    else 
+    {
         tmp->next = NULL;
     }
     head->next = tmp;
@@ -149,10 +166,12 @@ void insert(Node * head, unsigned n, int val) {
 
 int deleteNth(Node** head, int n) 
 {
-    if (n == 0) {
+    if (n == 0) 
+    {
         return pop(head);
     }
-    else {
+    else 
+    {
         Node* prev = getNth(*head, n - 1);
         Node* elm = prev->next;
         int val = elm->value;
@@ -164,17 +183,21 @@ int deleteNth(Node** head, int n)
 }
 
 
-void deleteList(Node** head) {
-    while ((*head)->next) {
+void deleteList(Node** head) 
+{
+    while ((*head)->next) 
+    {
         pop(head);
         *head = (*head)->next;
     }
     free(*head);
 }
 
-void deleteList(Node * *head) {
+void deleteList(Node * *head) 
+{
     Node* prev = NULL;
-    while ((*head)->next) {
+    while ((*head)->next) 
+    {
         prev = (*head);
         (*head) = (*head)->next;
         free(prev);
@@ -182,43 +205,50 @@ void deleteList(Node * *head) {
     free(*head);
 }
 
-void fromArray(Node * *head, int* arr, size_t size) {
+void fromArray(Node * *head, int* arr, size_t size) 
+{
     size_t i = size - 1;
-    if (arr == NULL || size == 0) {
+    if (arr == NULL || size == 0) 
+    {
         return;
     }
-    do {
+    do 
+    {
         push(head, arr[i]);
     } while (i-- != 0);
 }
 
-int* toArray(const Node * head) {
+int* toArray(const Node * head) 
+{
     int leng = length(head);
     int* values = (int*)malloc(leng * sizeof(int));
-    while (head) {
+    while (head) 
+    {
         values[--leng] = head->value;
         head = head->next;
     }
     return values;
 }
 
-void printLinkedList(const Node * head) {
-    while (head) {
+void printLinkedList(const Node * head) 
+{
+    while (head)
+    {
         printf("%d ", head->value);
         head = head->next;
     }
     printf("\n");
 }
 
-void main() {
+void main()
+{
     Node* head = NULL;
     int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
-    //Создаём список из массива
+    
     fromArray(&head, arr, 10);
 
     printLinkedList(head);
 
-    //Вставляем узел со значением 333 после 4-го элемента (станет пятым)
     insert(head, 4, 333);
     printLinkedList(head);
 
@@ -232,7 +262,7 @@ void main() {
     printf("%d\n", popBack(&head));
 
     printLinkedList(head);
-    //Удаляем пятый элемент (индексация с нуля)
+  
     deleteNth(&head, 4);
     printLinkedList(head);
     deleteList(&head);
